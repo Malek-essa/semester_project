@@ -1,0 +1,53 @@
+@startuml
+skinparam BackgroundColor transparent
+skinparam DefaultFontColor #1A365D
+skinparam DefaultFontName Arial
+skinparam sequence {
+    ArrowColor #1A365D
+    LifeLineBorderColor #1A365D
+    LifeLineBackgroundColor #F0F4F8
+    ParticipantBorderColor #1A365D
+    ParticipantBackgroundColor #FFFFFF
+    ParticipantFontColor #1A365D
+    ParticipantFontSize 14
+    ParticipantFontWeight bold
+    ActorBorderColor #1A365D
+    ActorBackgroundColor #FFFFFF
+    ActorFontColor #1A365D
+    DatabaseBackgroundColor #FFFFFF
+    DatabaseBorderColor #1A365D
+}
+
+autonumber
+
+' الترتيب المكاني: المستخدم يساراً والنظام يميناً
+actor "المستخدم" as user
+participant "واجهة التطبيق\n(Flutter)" as ui
+participant "الخادم\n(Python)" as backend
+database "قاعدة البيانات\n(MySQL)" as db
+
+user -> ui : يضغط زر "إضافة ماء"
+activate ui
+ui --> user : يعرض خيارات الكمية والنوع
+user -> ui : يحدد (مثال: 250مل، قهوة) ويؤكد
+
+ui -> backend : إرسال البيانات (POST request)\n[التاريخ بصيغة: 13/04/2026]
+activate backend
+
+backend -> backend : التحقق من صحة المدخلات\nوحساب نسبة الترطيب الفعلي
+
+backend -> db : حفظ السجل الجديد للمستخدم
+activate db
+db --> backend : تأكيد الحفظ
+deactivate db
+
+backend -> backend : حساب نسبة الإنجاز اليومي الجديدة
+
+backend --> ui : إرجاع استجابة (نجاح + نسبة الإنجاز المحدثة)
+deactivate backend
+
+ui -> ui : تحديث شريط التقدم بيانياً
+ui --> user : عرض إشعار بنجاح الإضافة
+deactivate ui
+
+@enduml

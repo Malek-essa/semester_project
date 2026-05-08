@@ -1,0 +1,127 @@
+@startuml
+skinparam BackgroundColor transparent
+skinparam DefaultFontColor #1A365D
+skinparam DefaultFontName Arial
+skinparam nodesep 30
+skinparam ranksep 40
+
+skinparam rectangle {
+    BackgroundColor #FFFFFF
+    BorderColor #1A365D
+    BorderThickness 2
+    FontSize 16
+    FontStyle bold
+}
+
+skinparam usecase {
+    BackgroundColor #F0F4F8
+    BorderColor #4299E1
+    FontColor #1A365D
+    FontSize 12
+}
+
+skinparam hexagon {
+    BackgroundColor #FFFFFF
+    BorderColor #F6E05E
+    BorderThickness 2
+    FontColor #1A365D
+    FontSize 14
+    FontStyle bold
+}
+
+' الكيانات الأساسية
+rectangle "المستخدم\nUsers" as user
+rectangle "سجل الماء\nWater_Logs" as water
+rectangle "سجل النوم\nSleep_Logs" as sleep
+rectangle "الإنجازات\nAchievements" as ach
+rectangle "المشروبات\nBeverages" as bev
+
+' العلاقات بين الكيانات
+hexagon "يستهلك" as r_water
+hexagon "يُسجل" as r_sleep
+hexagon "يُحقق" as r_ach
+hexagon "يُصنف كـ" as r_bev
+
+' ربط الكيانات بالعلاقات مع توضيح 1 إلى N بطريقة صحيحة
+user -down- r_water : "1"
+r_water -down- water : "N"
+
+user -left- r_sleep : "1"
+r_sleep -left- sleep : "N"
+
+user -up- r_ach : "1"
+r_ach -up- ach : "N"
+
+water -right- r_bev : "N"
+r_bev -right- bev : "1"
+
+' حقول المستخدم
+usecase "<u>UserID</u>" as u_id
+usecase "Name" as u_name
+usecase "Email" as u_email
+usecase "Password" as u_pass
+usecase "Weight" as u_w
+usecase "BedTime" as u_bt
+usecase "WakeUp" as u_wu
+usecase "WaterGoal" as u_wg
+usecase "SleepGoal" as u_sg
+usecase "Fasting" as u_fast
+usecase "CreatedAt" as u_ca
+
+user - u_id
+user - u_name
+user - u_email
+user - u_pass
+user - u_w
+user - u_bt
+user - u_wu
+user - u_wg
+user - u_sg
+user - u_fast
+user - u_ca
+
+' حقول سجل الماء
+usecase "<u>LogID</u>" as w_id
+usecase "Amount_ML" as w_amt
+usecase "LogDate" as w_ld
+usecase "LogTime" as w_lt
+
+water - w_id
+water - w_amt
+water - w_ld
+water - w_lt
+
+' حقول سجل النوم
+usecase "<u>SleepID</u>" as s_id
+usecase "SleepStart" as s_ss
+usecase "WakeUpEnd" as s_we
+usecase "TotalHours" as s_th
+usecase "LogDate" as s_ld
+
+sleep - s_id
+sleep - s_ss
+sleep - s_we
+sleep - s_th
+sleep - s_ld
+
+' حقول الإنجازات
+usecase "<u>AchieveID</u>" as a_id
+usecase "Title" as a_tit
+usecase "Type" as a_typ
+usecase "AchievedDate" as a_ad
+
+ach - a_id
+ach - a_tit
+ach - a_typ
+ach - a_ad
+
+' حقول المشروبات
+usecase "<u>BeverageID</u>" as b_id
+usecase "Name" as b_name
+usecase "Factor" as b_fac
+
+bev - b_id
+bev - b_name
+bev - b_fac
+
+@enduml

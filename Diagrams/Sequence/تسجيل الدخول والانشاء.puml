@@ -1,0 +1,53 @@
+@startuml
+skinparam BackgroundColor transparent
+skinparam DefaultFontColor #1A365D
+skinparam DefaultFontName Arial
+skinparam sequence {
+    ArrowColor #1A365D
+    LifeLineBorderColor #1A365D
+    LifeLineBackgroundColor #F0F4F8
+    ParticipantBorderColor #1A365D
+    ParticipantBackgroundColor #FFFFFF
+    ParticipantFontColor #1A365D
+    ParticipantFontSize 16
+    ParticipantFontWeight bold
+    ActorBorderColor #1A365D
+    ActorBackgroundColor #FFFFFF
+    ActorFontColor #1A365D
+    DatabaseBackgroundColor #FFFFFF
+    DatabaseBorderColor #1A365D
+}
+
+autonumber
+
+actor "المستخدم" as user
+participant "واجهة الدخول\n(Flutter)" as ui
+participant "خادم المصادقة\n(Python)" as auth
+database "قاعدة البيانات\n(MySQL)" as db
+
+user -> ui : إدخال بيانات الاعتماد
+activate ui
+
+ui -> auth : طلب مصادقة (Login Request)\nJSON: {email, password}
+activate auth
+
+auth -> db : استعلام عن بيانات المستخدم
+activate db
+db --> auth : إرجاع البيانات المشفرة
+deactivate db
+
+auth -> auth : مطابقة كلمة المرور\nوتوليد  الجلسة
+
+alt البيانات صحيحة
+    auth --> ui : استجابة (Success + Token)
+    ui -> ui : حفظ الـ Token محلياً
+    ui --> user : الانتقال للشاشة الرئيسية
+else البيانات خاطئة
+    auth --> ui : استجابة (Error: Unauthorized)
+    ui --> user : عرض "فشل تسجيل الدخول"
+end
+
+deactivate auth
+deactivate ui
+
+@enduml

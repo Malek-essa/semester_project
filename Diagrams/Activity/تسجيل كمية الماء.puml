@@ -1,0 +1,68 @@
+@startuml
+' تحسين التنسيق ليتناسب مع حجم الشريحة والوضوح العالي
+skinparam BackgroundColor transparent
+skinparam DefaultFontColor #1A365D
+skinparam DefaultFontName "Arial"
+skinparam nodesep 120 ' زيادة المسافة الأفقية ليتوزع المخطط عرضياً
+skinparam ranksep 50  ' المسافة الرأسية بين الخطوات
+
+skinparam Activity {
+    BackgroundColor #FFFFFF
+    BorderColor #1A365D
+    FontColor #1A365D
+    BorderThickness 2.5
+    FontSize 18 ' تكبير الخط للوضوح
+    RoundCorner 15
+}
+
+skinparam Arrow {
+    Color #1A365D
+    FontColor #1A365D
+    FontSize 15
+    Thickness 2
+}
+
+skinparam Partition {
+    BorderColor #1A365D
+    FontColor #1A365D
+    FontSize 22
+    FontStyle bold
+}
+
+skinparam ActivityDiamond {
+    BackgroundColor #FFFFFF
+    BorderColor #1A365D
+    FontColor #1A365D
+}
+
+|المستخدم|
+start
+:يضغط على زر "إضافة ماء";
+
+|النظام|
+:يعرض الخيارات\n(الكمية ونوع المشروب);
+
+repeat
+  |المستخدم|
+  :يحدد الكمية والنوع ويضغط تأكيد;
+  
+  |النظام|
+  if (هل الإدخال صحيح؟) then (نعم)
+    break
+  else (لا)
+    :يعرض رسالة خطأ;
+  endif
+repeat while (إعادة الإدخال)
+
+|النظام|
+:يحسب نسبة الترطيب الفعلي\nبناءً على نوع المشروب;
+:يحفظ السجل في قاعدة البيانات;
+:يُحدث شريط التقدم اليومي;
+
+if (هل اكتمل الهدف اليومي؟) then (نعم)
+  :تفعيل نظام الإنجازات\nوعرض رسالة تهنئة;
+else (لا)
+endif
+
+stop
+@enduml

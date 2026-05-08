@@ -1,0 +1,83 @@
+@startuml
+skinparam BackgroundColor transparent
+skinparam DefaultFontColor #1A365D
+skinparam DefaultFontName Arial
+
+skinparam class {
+    BackgroundColor #FFFFFF
+    BorderColor #1A365D
+    FontColor #1A365D
+    BorderThickness 2
+    FontSize 14
+    HeaderBackgroundColor #F0F4F8
+}
+
+skinparam Arrow {
+    Color #1A365D
+    FontColor #1A365D
+    FontSize 12
+    Thickness 1.5
+}
+
+' إخفاء الدوائر الافتراضية والوظائف لتنظيف شكل الـ ERD
+hide circle
+hide methods
+
+entity "Users (المستخدمين)" as users {
+  * UserID : INT <<PK>>
+  --
+  Name : VARCHAR
+  Email : VARCHAR
+  PasswordHash : VARCHAR
+  Weight : FLOAT
+  BedTime : TIME
+  WakeUpTime : TIME
+  WaterGoal : INT
+  SleepGoal : FLOAT
+  IsFastingMode : BOOLEAN
+  CreatedAt : DATE
+}
+
+entity "Water_Logs (سجل الماء)" as water {
+  * LogID : INT <<PK>>
+  --
+  * UserID : INT <<FK>>
+  * BeverageID : INT <<FK>>
+  Amount_ML : INT
+  LogDate : DATE
+  LogTime : TIME
+}
+
+entity "Sleep_Logs (سجل النوم)" as sleep {
+  * SleepID : INT <<PK>>
+  --
+  * UserID : INT <<FK>>
+  SleepStart : DATETIME
+  WakeUpEnd : DATETIME
+  TotalHours : FLOAT
+  LogDate : DATE
+}
+
+entity "Achievements (الإنجازات)" as ach {
+  * AchievementID : INT <<PK>>
+  --
+  * UserID : INT <<FK>>
+  Title : VARCHAR
+  Type : VARCHAR
+  AchievedDate : DATE
+}
+
+entity "Beverage_Types (أنواع المشروبات)" as bev {
+  * BeverageID : INT <<PK>>
+  --
+  Name : VARCHAR
+  HydrationFactor : FLOAT
+}
+
+' ترتيب العلاقات بحيث يكون المستخدم على اليسار والنظام على اليمين 
+users ||-up-o{ sleep : "يسجل"
+users ||-right-o{ water : "يسجل"
+users ||-down-o{ ach : "يحقق"
+water }o-right-|| bev : "يحتوي"
+
+@enduml

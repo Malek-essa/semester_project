@@ -1,0 +1,53 @@
+@startuml
+skinparam BackgroundColor transparent
+skinparam DefaultFontColor #1A365D
+skinparam DefaultFontName "Arial"
+skinparam nodesep 100
+skinparam ranksep 50
+
+skinparam Activity {
+    BackgroundColor #FFFFFF
+    BorderColor #1A365D
+    FontColor #1A365D
+    BorderThickness 2.5
+    FontSize 18
+    RoundCorner 15
+}
+
+skinparam Arrow {
+    Color #1A365D
+    FontColor #1A365D
+    FontSize 15
+    Thickness 2
+}
+
+|المستخدم|
+start
+:فتح التطبيق;
+
+if (هل يوجد حساب مسجل؟) then (لا)
+  :اختيار "إنشاء حساب جديد";
+  |النظام|
+  :عرض نموذج البيانات\n(الاسم، البريد ، كلمة المرور);
+  |المستخدم|
+  :إدخال البيانات الشخصية;
+else (نعم)
+  |المستخدم|
+  :إدخال البريد وكلمة المرور;
+endif
+
+|النظام|
+:التحقق من صحة البيانات;
+
+if (هل البيانات صحيحة؟) then (نعم)
+  :تشفير الجلسة (Token);
+  :تحميل الإعدادات الشخصية;
+  :التوجه للشاشة الرئيسية;
+  stop
+else (لا)
+  :عرض رسالة خطأ;
+  |المستخدم|
+  :إعادة المحاولة;
+  detach
+endif
+@enduml

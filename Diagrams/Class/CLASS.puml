@@ -1,0 +1,160 @@
+@startuml
+skinparam BackgroundColor transparent
+skinparam DefaultFontColor #1A365D
+skinparam DefaultFontName Arial
+
+' إجبار البرنامج على عرض الرموز الأكاديمية (+ و -) بوضوح بدل الأيقونات
+skinparam classAttributeIconSize 0
+
+' التحكم بالمسافات لتكبير المخطط وملاءمة الشريحة
+skinparam nodesep 130
+skinparam ranksep 90
+
+' تنسيق الكلاسات بحجم كبير ومقروء جداً
+skinparam class {
+    BackgroundColor #FFFFFF
+    BorderColor #1A365D
+    FontColor #1A365D
+    BorderThickness 2.5
+    FontSize 20
+    AttributeFontSize 16
+    MethodFontSize 16
+    HeaderBackgroundColor #F0F4F8
+    roundCorner 12
+}
+
+skinparam Arrow {
+    Color #1A365D
+    FontColor #1A365D
+    FontSize 15
+    Thickness 2
+}
+
+skinparam package {
+    BorderColor #4299E1
+    FontColor #1A365D
+    FontSize 24
+    FontStyle bold
+    BackgroundColor transparent
+}
+
+' --- 1. Controllers Layer ---
+package "1. Controllers Layer (API)" {
+    class WaterController {
+        - waterService : WaterService
+        + addWater(req: Json) : Response
+        + getProgress(userId: int) : Response
+    }
+    class SleepController {
+        - sleepService : SleepService
+        + setAlarm(req: Json) : Response
+        + addSleepRecord(req: Json) : Response
+    }
+    WaterController -[hidden]right- SleepController
+}
+
+' --- 2. Services Layer & Patterns ---
+package "2. Services & Business Logic" {
+    class WaterService {
+        - waterRepo : IWaterRepo
+        - hydrationStrategy : IHydrationStrategy
+        + calculateProgress(userId: int) : int
+        + logWater(amount: int, type: String) : boolean
+    }
+    class SleepService {
+        - sleepRepo : ISleepRepo
+        - notifyStrategy : INotificationStrategy
+        + calcTotalSleep(userId: int) : float
+        + triggerAlarm(userId: int) : void
+    }
+    
+    interface "<<interface>>\nIHydrationStrategy" as IHydration {
+        + calcFactor(amount: int) : float
+    }
+    class WaterHydration {
+        + calcFactor(amount: int) : float
+    }
+    
+    interface "<<interface>>\nINotificationStrategy" as INotify {
+        + schedule() : void
+    }
+    class FastingNotify {
+        + schedule() : void
+    }
+
+    WaterService -[hidden]right- SleepService
+    IHydration -[hidden]right- INotify
+}
+
+' --- 3. Repositories Layer ---
+package "3. Repositories (Data Access)" {
+    interface "<<interface>>\nIWaterRepo" as IWaterRepo {
+        + save(log: WaterLog) : boolean
+        + getByDate(date: Date) : List
+    }
+    class SQLWaterRepo {
+        - dbConnection : Database
+        + save(log: WaterLog) : boolean
+        + getByDate(date: Date) : List
+    }
+
+    interface "<<interface>>\nISleepRepo" as ISleepRepo {
+        + save(log: SleepLog) : boolean
+    }
+    class SQLSleepRepo {
+        - dbConnection : Database
+        + save(log: SleepLog) : boolean
+    }
+    
+    IWaterRepo -[hidden]right- ISleepRepo
+}
+
+' --- 4. Models (Entities) ---
+package "4. Models (Entities)" {
+    class User {
+        - userId: int
+        - name: String
+        - waterGoal: int
+        - isFasting: boolean
+        + getUserId() : int
+        + getWaterGoal() : int
+        + checkFastingState() : boolean
+    }
+    class WaterLog {
+        - logId: int
+        - amountML: int
+        - date: Date
+        + getAmountML() : int
+    }
+    class SleepLog {
+        - sleepId: int
+        - totalHours: float
+        + getTotalHours() : float
+    }
+    
+    WaterLog -[hidden]right- User
+    User -[hidden]right- SleepLog
+}
+
+' --- Relationships (الروابط) ---
+
+WaterController --> WaterService : " "
+SleepController --> SleepService : " "
+
+WaterService *-- IHydration : " "
+WaterHydration ..|> IHydration
+
+SleepService *-- INotify : " "
+FastingNotify ..|> INotify
+
+WaterService --> IWaterRepo : "  "
+SQLWaterRepo ..|> IWaterRepo
+
+SleepService --> ISleepRepo : "  "
+SQLSleepRepo ..|> ISleepRepo
+
+IWaterRepo ..> WaterLog : " "
+ISleepRepo ..> SleepLog : " "
+WaterService ..> User : " "
+
+@enduml

@@ -1,0 +1,92 @@
+@startuml
+' --- إعدادات التصميم (خلفية شفافة، ألوان فخمة) ---
+skinparam BackgroundColor transparent
+skinparam DefaultFontColor #1A365D
+skinparam DefaultFontName Arial
+
+' تقليل المسافة العمودية وزيادة الأفقية لضمان العرض المناسب
+skinparam nodesep 15
+skinparam ranksep 80
+
+skinparam actor {
+    BackgroundColor #FFFFFF
+    BorderColor #1A365D
+    FontColor #1A365D
+    FontSize 22
+    FontStyle bold
+}
+
+skinparam usecase {
+    BackgroundColor #F0F4F8
+    BorderColor #1A365D
+    FontColor #1A365D
+    BorderThickness 2.5
+    FontSize 18
+    roundCorner 20
+}
+
+skinparam arrow {
+    Color #1A365D
+    Thickness 2
+}
+
+skinparam rectangle {
+    BorderColor #1A365D
+    FontColor #1A365D
+    FontSize 28
+    FontStyle bold
+    BackgroundColor transparent
+}
+
+left to right direction
+
+actor "المستخدم" as user
+actor "مدير النظام" as system
+
+rectangle "المساعد الصحي الذكي" {
+    
+    ' --- العمود الأول (8 حالات - الأقرب للمستخدم) ---
+    usecase "تسجيل الدخول والإنشاء" as UC1
+    usecase "إدارة الملف الشخصي" as UC2
+    usecase "تعديل الأهداف يدوياً" as UC3
+    usecase "تعديل مدخلات سابقة" as UC4
+    usecase "وضع الصيام" as UC5
+    usecase "تسجيل كمية الماء" as UC6
+    usecase "تسجيل ساعات النوم" as UC7
+    usecase "مراقبة التقدم اليومي" as UC8
+
+    ' --- العمود الثاني (4 حالات - متداخلة ومدفوعة لليمين) ---
+    usecase "تخصيص المشروبات" as UC9
+    usecase "إضافة اختصار" as UC10
+    usecase "تقديم نصائح" as UC11
+    usecase "تصدير التقارير" as UC12
+
+    ' --- العمود الثالث (3 حالات - خاصة بالنظام) ---
+    usecase "الإشعارات الذكية" as UC13
+    usecase "نظام الإنجازات" as UC14
+    usecase "منبه موعد النوم" as UC15
+}
+
+' --- روابط المستخدم (الخدعة هنا في طول السهم) ---
+' خطوط قصيرة للعمود الأول
+user -- UC1
+user -- UC2
+user -- UC3
+user -- UC4
+user -- UC5
+user -- UC6
+user -- UC7
+user -- UC8
+
+' خطوط طويلة (---) لدفع العمود الثاني وتداخله كما في صورتك
+user --- UC9
+user --- UC10
+user --- UC11
+user --- UC12
+
+' --- روابط النظام ---
+UC13 -- system
+UC14 -- system
+UC15 -- system
+
+@enduml
