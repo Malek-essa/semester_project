@@ -16,21 +16,18 @@ from .controllers import log_controller
 Base.metadata.create_all(bind=engine)
 app = FastAPI(title="Smart Health Assistant")
 
-# إعدادات CORS للسماح للفرونت إند بالاتصال
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # يسمح لأي جهة بالاتصال (للتطوير المحلي)
+    allow_origins=["*"], 
     allow_credentials=True,
-    allow_methods=["*"],  # يسمح بكل أنواع الطلبات (GET, POST, PUT, DELETE)
+    allow_methods=["*"],  
     allow_headers=["*"],
 )
 
-# السماح بقراءة الملفات المحفوظة (مثل ملفات الـ PDF)
 import os
 os.makedirs("static/reports", exist_ok=True)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# تسجيل الروابط
 app.include_router(auth_controller.router)
 app.include_router(user_controller.router)
 app.include_router(water_controller.router)

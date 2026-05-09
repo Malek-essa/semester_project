@@ -60,7 +60,6 @@ class ProfileController extends GetxController {
       return;
     }
 
-    // 🔥 التعديل هنا: فحص الاسم ليكون باللغة الإنجليزية فقط
     if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(name)) {
       Get.snackbar('تنبيه', 'يرجى كتابة الاسم باللغة الإنجليزية فقط لتجنب أخطاء التقارير', backgroundColor: Colors.redAccent, colorText: Colors.white);
       return;
@@ -87,7 +86,7 @@ class ProfileController extends GetxController {
       await prefs.setString('user_name', name);
 
       if (Get.isRegistered<HomeController>()) {
-        Get.find<HomeController>().userName.value = name; // تحديث الاسم في الشاشة الرئيسية فوراً
+        Get.find<HomeController>().userName.value = name; 
         Get.find<HomeController>().loadDashboardData();
       }
 

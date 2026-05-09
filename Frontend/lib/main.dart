@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_widget/home_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // 🆕 استدعاء مكتبة الذاكرة المحلية
-import 'data/providers/api_provider.dart'; // 🆕 استدعاء مزود الـ API الخاص بنا
+import 'package:shared_preferences/shared_preferences.dart'; 
+import 'data/providers/api_provider.dart'; 
 
 import 'modules/auth/login_view.dart';
 import 'routes/app_pages.dart';
@@ -10,7 +10,6 @@ import 'routes/app_pages.dart';
 @pragma('vm:entry-point')
 Future<void> backgroundCallback(Uri? uri) async {
   if (uri?.host == 'addwater') {
-    // جلب بيانات المستخدم من الذاكرة المحلية
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     final userId = prefs.getInt('user_id');
@@ -18,9 +17,8 @@ Future<void> backgroundCallback(Uri? uri) async {
     if (token != null && userId != null) {
       try {
         final api = ApiProvider();
-        // تسجيل 250 مل ماء (نعتبر المشروب رقم 1 هو الماء)
         await api.addWaterLog(250, 1, token, userId);
-        debugPrint("💧 تم تسجيل الماء من الويدجت بنجاح!"); // استخدمنا debugPrint لتجنب تحذيرات الـ Linter
+        debugPrint("💧 تم تسجيل الماء من الويدجت بنجاح!"); 
       } catch (e) {
         debugPrint("❌ خطأ من الويدجت: $e");
       }
@@ -53,9 +51,7 @@ class SmartHealthApp extends StatelessWidget {
   }
 }
 
-// ==========================================
-// شاشة رئيسية مؤقتة للتجربة (يمكنك حذفها لاحقاً إذا لم تعودي بحاجة لها)
-// ==========================================
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 

@@ -22,20 +22,18 @@ class HomeController extends GetxController {
 
   final customWaterController = TextEditingController();
 
-  // 🔥 قائمة المشروبات والمشروب المحدد حالياً
   var beverages = [].obs;
-  var selectedBeverageId = 1.obs; // افتراضياً 1 = ماء
+  var selectedBeverageId = 1.obs; 
 
   final ApiProvider _apiProvider = ApiProvider();
 
   @override
   void onInit() {
     super.onInit();
-    loadBeverages(); // تحميل المشروبات أولاً
+    loadBeverages(); 
     loadDashboardData();
   }
 
-  // 🆕 دالة تحميل المشروبات من الذاكرة
   void loadBeverages() async {
     final prefs = await SharedPreferences.getInstance();
     final savedStr = prefs.getString('custom_beverages') ?? '[]';
@@ -95,7 +93,6 @@ class HomeController extends GetxController {
     final userId = prefs.getInt('user_id') ?? 0;
 
     try {
-      // 🔥 تمرير الـ selectedBeverageId
       final result = await _apiProvider.addWaterLog(amount, selectedBeverageId.value, token, userId);
       
       if (result['total_today'] != null) waterCurrent.value = result['total_today'];
@@ -104,7 +101,6 @@ class HomeController extends GetxController {
       loadDashboardData();
       Get.snackbar('صحة وهنا! 💧', 'تم تسجيل الكمية بنجاح', backgroundColor: Colors.blue.shade100, colorText: Colors.blue.shade900, snackPosition: SnackPosition.TOP);
       
-      // إعادة التعيين للماء كخيار افتراضي
       selectedBeverageId.value = 1;
 
     } catch (e) {

@@ -31,7 +31,6 @@ class HistoryController extends GetxController {
     }
   }
 
-  // دالة التعديل
   void updateLogEntry(String type, int id, double newValue) async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -39,10 +38,9 @@ class HistoryController extends GetxController {
 
       await _apiProvider.updateLog(type, id, newValue, token);
       
-      Get.back(); // إغلاق نافذة التعديل
-      fetchHistory(); // جلب البيانات المحدثة
+      Get.back(); 
+      fetchHistory(); 
       
-      // الخطوة 6 بالسيناريو: تحديث شريط التقدم بالشاشة الرئيسية
       if (Get.isRegistered<HomeController>()) {
         Get.find<HomeController>().loadDashboardData();
       }
@@ -53,7 +51,6 @@ class HistoryController extends GetxController {
     }
   }
 
-  // دالة الحذف
   void deleteLogEntry(String type, int id) async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -61,10 +58,9 @@ class HistoryController extends GetxController {
 
       await _apiProvider.deleteLog(type, id, token);
       
-      Get.back(); // إغلاق رسالة التأكيد
-      fetchHistory(); // جلب البيانات المحدثة
+      Get.back(); 
+      fetchHistory(); 
       
-      // الخطوة 6 بالمسار البديل: تحديث شريط التقدم
       if (Get.isRegistered<HomeController>()) {
         Get.find<HomeController>().loadDashboardData();
       }

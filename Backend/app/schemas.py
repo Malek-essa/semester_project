@@ -2,26 +2,24 @@ from pydantic import BaseModel
 from datetime import time, date, datetime
 from typing import List, Optional
 
-# --- أولاً: الحساب (Auth) ---
 class UserCreate(BaseModel):
     name: str
     email: str
     password: str
     weight: Optional[float] = None
-    height: Optional[float] = None       # حسب الاتفاقية
-    gender: Optional[str] = None         # حسب الاتفاقية
-    birth_date: Optional[date] = None    # حسب الاتفاقية
+    height: Optional[float] = None       
+    gender: Optional[str] = None         
+    birth_date: Optional[date] = None    
 
 class UserLogin(BaseModel):
     email: str
     password: str
 
-# --- ثانياً: الملف الشخصي (Profile & Settings) ---
 class ProfileUpdate(BaseModel):
     name: Optional[str] = None
     weight: Optional[float] = None
     bed_time: Optional[time] = None
-    wakeup_time: Optional[time] = None   # مي سمّتها wakeup_time بالاتفاقية
+    wakeup_time: Optional[time] = None  
 
 class GoalUpdate(BaseModel):
     water_goal_ml: int
@@ -40,7 +38,7 @@ class WaterLogCreate(BaseModel):
     time: time
 
 class WaterLogUpdate(BaseModel):
-    log_type: str = "water"              # حسب الاتفاقية (بند 7)
+    log_type: str = "water"              
     log_id: int
     new_value: int
 
@@ -55,14 +53,12 @@ class SleepLogResponse(BaseModel):
     class Config:
         from_attributes = True
 
-# الكلاس اللي كان ناقص:
 class SleepAlarmSet(BaseModel):
     alarm_time: time
     
     class Config:
         from_attributes = True
 
-# --- رابعاً: المراقبة (Progress) ---
 class DailyProgressResponse(BaseModel):
     water_progress_percent: float
     sleep_progress_percent: float
@@ -71,7 +67,7 @@ class DailyProgressResponse(BaseModel):
     sleep_hours_logged: float
     sleep_goal_hours: float
     new_achievements: List[str] = []
-# --- المراقبة والذكاء (Intelligence) ---
+    
 class TipResponse(BaseModel):
     tip_title: str
     tip_content: str

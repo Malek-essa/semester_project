@@ -14,7 +14,7 @@ class LoginView extends StatelessWidget {
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
-          child: Obx(() => Column( // غلفنا العمود بـ Obx ليتفاعل مع التغييرات
+          child: Obx(() => Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -27,7 +27,7 @@ class LoginView extends StatelessWidget {
               ),
               const SizedBox(height: 40),
 
-              // 🆕 إظهار حقل الاسم فقط في وضع إنشاء الحساب
+             
               if (!controller.isLoginMode.value) ...[
                 TextField(
                   controller: controller.nameController,
@@ -62,7 +62,7 @@ class LoginView extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // 🆕 إظهار حقل الوزن فقط في وضع إنشاء الحساب
+              
               if (!controller.isLoginMode.value) ...[
                 TextField(
                   controller: controller.weightController,
@@ -95,7 +95,6 @@ class LoginView extends StatelessWidget {
 
               const SizedBox(height: 20),
               
-              // 🆕 زر التبديل بين الدخول والإنشاء
               TextButton(
                 onPressed: controller.toggleMode,
                 child: Text(

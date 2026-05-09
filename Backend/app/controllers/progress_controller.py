@@ -6,7 +6,6 @@ from .. import schemas
 
 router = APIRouter(prefix="/api/user", tags=["Daily Dashboard & Achievements (UC-09)"])
 
-# البند 11: مراقبة التقدم اليومي (مع دعم التاريخ)
 @router.get("/progress", response_model=schemas.DailyProgressResponse)
 def get_daily_progress(user_id: int, date: str = Query(None), db: Session = Depends(get_db)):
     service = ProgressService(db)
@@ -17,7 +16,6 @@ def get_daily_progress(user_id: int, date: str = Query(None), db: Session = Depe
         
     return dashboard_data
 
-# البند 12: نظام الإنجازات
 @router.get("/achievements")
 def get_achievements(user_id: int, db: Session = Depends(get_db)):
     service = ProgressService(db)

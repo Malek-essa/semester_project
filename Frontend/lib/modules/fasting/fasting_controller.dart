@@ -26,7 +26,6 @@ class FastingController extends GetxController {
   void toggleSwitch(bool value) {
     isFastingModeActive.value = value;
     if (!value) {
-      // إذا تم إيقاف الوضع، نقوم بالحفظ مباشرة
       saveFastingSettings();
     }
   }
@@ -34,7 +33,7 @@ class FastingController extends GetxController {
   Future<void> pickTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialTime: const TimeOfDay(hour: 4, minute: 30), // افتراضياً وقت السحور
+      initialTime: const TimeOfDay(hour: 4, minute: 30), 
     );
     if (picked != null) {
       startTime.value = picked;

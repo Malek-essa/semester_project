@@ -32,7 +32,6 @@ class GoalsView extends StatelessWidget {
             ),
             const SizedBox(height: 30),
 
-            // حقل هدف الماء
             TextField(
               controller: controller.waterGoalController,
               keyboardType: TextInputType.number,
@@ -44,7 +43,6 @@ class GoalsView extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
-            // حقل هدف النوم
             TextField(
               controller: controller.sleepGoalController,
               keyboardType: TextInputType.number,
@@ -56,7 +54,6 @@ class GoalsView extends StatelessWidget {
             ),
             const SizedBox(height: 40),
 
-            // زر التحديث
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),

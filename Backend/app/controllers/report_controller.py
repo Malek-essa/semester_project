@@ -6,7 +6,6 @@ from .. import schemas
 
 router = APIRouter(prefix="/api/reports", tags=["Export Reports (UC-05)"])
 
-# البند 15: تصدير التقارير
 @router.get("/export", response_model=schemas.ReportResponse)
 def export_report(user_id: int, format: str = "pdf", range: str = "weekly", db: Session = Depends(get_db)):
     if format.lower() != "pdf":

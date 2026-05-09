@@ -19,7 +19,6 @@ class UserRepo:
         self.db.refresh(new_user)
         return new_user
 
-    # تم توحيد الاسم لـ update_user
     def update_user(self, user_id: int, update_data: dict):
         db_user = self.get_user_by_id(user_id)
         if db_user:

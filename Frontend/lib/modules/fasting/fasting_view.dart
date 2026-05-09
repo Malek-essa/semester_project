@@ -32,7 +32,6 @@ class FastingView extends StatelessWidget {
             ),
             const SizedBox(height: 40),
 
-            // زر التفعيل (Switch)
             Card(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
               elevation: 2,
@@ -47,7 +46,6 @@ class FastingView extends StatelessWidget {
             ),
             const SizedBox(height: 30),
 
-            // تظهر الخيارات فقط إذا كان الوضع مفعلاً
             if (controller.isFastingModeActive.value) ...[
               ListTile(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: BorderSide(color: Colors.indigo.shade200)),

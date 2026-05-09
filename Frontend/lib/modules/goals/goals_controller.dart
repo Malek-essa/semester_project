@@ -17,7 +17,6 @@ class GoalsController extends GetxController {
     _loadCurrentGoals();
   }
 
-  // جلب الأهداف الحالية من HomeController لتسهيل التعديل على المستخدم
   void _loadCurrentGoals() {
     if (Get.isRegistered<HomeController>()) {
       final homeCtrl = Get.find<HomeController>();
@@ -26,7 +25,6 @@ class GoalsController extends GetxController {
     }
   }
 
-  // دالة الحفظ
   Future<void> updateGoals() async {
     final waterStr = waterGoalController.text.trim();
     final sleepStr = sleepGoalController.text.trim();
@@ -50,15 +48,13 @@ class GoalsController extends GetxController {
       final token = prefs.getString('token') ?? '';
       final userId = prefs.getInt('user_id') ?? 0;
 
-      // إرسال الطلب
       await _apiProvider.updateGoals(userId, token, waterGoal, sleepGoal);
 
-      // إعادة ضبط مؤشرات التقدم بالشاشة الرئيسية فوراً
       if (Get.isRegistered<HomeController>()) {
         Get.find<HomeController>().loadDashboardData();
       }
 
-      Get.back(); // العودة للشاشة الرئيسية
+      Get.back(); 
       Get.snackbar('نجاح 🎯', 'تم تحديث الأهداف وإعادة حساب التقدم بنجاح', backgroundColor: Colors.green, colorText: Colors.white);
 
     } catch (e) {

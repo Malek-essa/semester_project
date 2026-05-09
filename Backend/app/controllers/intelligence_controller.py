@@ -6,17 +6,14 @@ from .. import schemas
 
 router = APIRouter(prefix="/api", tags=["Intelligence & Monitoring (UC-06)"])
 
-# البند 14: تقديم نصائح
 @router.get("/user/tips", response_model=schemas.TipResponse)
 def get_user_tips(user_id: int, db: Session = Depends(get_db)):
     service = IntelligenceService(db)
     tip = service.generate_daily_tip(user_id)
     if not tip:
-        # نصيحة افتراضية في حال لم يتم العثور على المستخدم
         return {"tip_title": "نصيحة صحية", "tip_content": "شرب الماء بانتظام يحسن من صحة الجلد.", "relevance_score": 0.5}
     return tip
 
-# البند 13: إعدادات الإشعارات الذكية
 @router.get("/notifications/settings", response_model=schemas.NotificationSettingsResponse)
 def get_notification_settings(user_id: int):
     # حالياً نرجع قيم افتراضية (يمكن ربطها بجدول إعدادات لاحقاً إذا طلب المشرفون ذلك)

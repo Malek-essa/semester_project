@@ -8,7 +8,6 @@ class ProgressRepo:
         self.db = db
 
     def get_today_water_sum(self, user_id: int, today: date):
-        # استعلام يجمع كل الماء المشروب لليوم الحالي
         result = self.db.query(func.sum(models.WaterLog.amount_ml)).filter(
             models.WaterLog.user_id == user_id,
             models.WaterLog.log_date == today

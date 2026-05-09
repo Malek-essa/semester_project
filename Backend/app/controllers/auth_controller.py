@@ -10,7 +10,6 @@ router = APIRouter(prefix="/api/auth", tags=["Auth (UC-01)"])
 def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
     auth_service = AuthService(db)
     auth_service.register_user(user)
-    # إرجاع الاستجابة كما طلبت مي بالحرف
     return {"status": "success", "message": "User created"}
 
 @router.post("/login")

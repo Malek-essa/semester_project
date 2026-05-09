@@ -18,10 +18,8 @@ class HomeView extends StatelessWidget {
         backgroundColor: Colors.teal,
         foregroundColor: Colors.white,
         elevation: 0,
-        // 🗑️ شلنا كل الـ actions من هون لتنظيف الواجهة! فلاتر رح يضيف أيقونة القائمة تلقائياً
       ),
 
-      // 🌟 إضافة القائمة الجانبية (Drawer)
       endDrawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -40,12 +38,11 @@ class HomeView extends StatelessWidget {
               accountEmail: const Text('المساعد الصحي الذكي'),
             )),
             
-            // عناصر القائمة
             ListTile(
               leading: const Icon(Icons.person, color: Colors.teal),
               title: const Text('الملف الشخصي', style: TextStyle(fontWeight: FontWeight.bold)),
               onTap: () {
-                Get.back(); // إغلاق القائمة أولاً
+                Get.back(); 
                 Get.toNamed('/profile');
               },
             ),
@@ -110,7 +107,6 @@ class HomeView extends StatelessWidget {
       
       body: Obx(() {
         if (controller.isLoading.value && controller.waterGoal.value == 2000 && controller.waterCurrent.value == 0) {
-          // نعرض اللودينغ فقط في البداية عشان ما ترف الشاشة مع كل تحديث
           return const Center(child: CircularProgressIndicator(color: Colors.teal));
         }
 
@@ -133,14 +129,12 @@ class HomeView extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
                 
-                // بطاقة الماء
                 _buildProgressCard(
                   title: 'استهلاك الماء', icon: Icons.water_drop, color: Colors.blue, 
                   percent: waterPercent, currentText: '${controller.waterCurrent.value} مل', goalText: 'من ${controller.waterGoal.value} مل'
                 ),
                 const SizedBox(height: 20),
 
-                // بطاقة النوم (مع زر تسجيل النوم)
                 _buildProgressCard(
                   title: 'ساعات النوم', icon: Icons.bedtime, color: Colors.indigo, 
                   percent: sleepPercent, currentText: '${controller.sleepCurrent.value} ساعة', goalText: 'من ${controller.sleepGoal.value} ساعات',
@@ -179,7 +173,6 @@ class HomeView extends StatelessWidget {
             const Text('ماذا شربت للتو؟', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             const SizedBox(height: 15),
             
-            // 🔥 عرض المشروبات كأزرار يمكن الاختيار بينها
             Obx(() => Wrap(
               spacing: 10,
               runSpacing: 10,

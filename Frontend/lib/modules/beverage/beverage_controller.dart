@@ -34,13 +34,11 @@ class BeverageController extends GetxController {
 
       final response = await _apiProvider.addCustomBeverage(name, factor, token);
       
-      // 🔥 حفظ المشروب محلياً لعرضه في شاشة الرئيسية
       final savedStr = prefs.getString('custom_beverages') ?? '[]';
       List savedList = jsonDecode(savedStr);
-      savedList.add(response['beverage']); // الباك إند بيرجع كائن المشروب
+      savedList.add(response['beverage']);
       await prefs.setString('custom_beverages', jsonEncode(savedList));
 
-      // تحديث قائمة المشروبات في الشاشة الرئيسية فوراً
       if (Get.isRegistered<HomeController>()) {
         Get.find<HomeController>().loadBeverages();
       }
