@@ -16,5 +16,4 @@ def get_user_tips(user_id: int, db: Session = Depends(get_db)):
 
 @router.get("/notifications/settings", response_model=schemas.NotificationSettingsResponse)
 def get_notification_settings(user_id: int):
-    # حالياً نرجع قيم افتراضية (يمكن ربطها بجدول إعدادات لاحقاً إذا طلب المشرفون ذلك)
     return {"allow_reminders": True, "frequency_minutes": 60}
