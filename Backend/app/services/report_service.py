@@ -7,7 +7,6 @@ from ..repositories.user_repo import UserRepo
 class ReportService:
     def __init__(self, db: Session):
         self.user_repo = UserRepo(db)
-        # التأكد من وجود مجلد لحفظ التقارير
         os.makedirs("static/reports", exist_ok=True)
 
     def generate_weekly_report(self, user_id: int):
@@ -15,12 +14,10 @@ class ReportService:
         if not user:
             return None
         
-        # 1. إنشاء ملف PDF جديد
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font("Arial", "B", 16)
         
-        # 2. كتابة محتوى التقرير
         pdf.cell(200, 10, txt="Smart Health Assistant - Weekly Report", ln=True, align="C")
         pdf.ln(10)
         
@@ -35,12 +32,9 @@ class ReportService:
         pdf.cell(200, 10, txt=f"- Water Goal: {user.water_goal} ml", ln=True)
         pdf.cell(200, 10, txt=f"- Sleep Goal: {user.sleep_goal} hours", ln=True)
         
-        # (ملاحظة: يمكنك لاحقاً استدعاء ProgressRepo لجلب الإنجازات الحقيقية للأسبوع)
         
-        # 3. حفظ الملف
         file_name = f"report_user_{user_id}_{date.today()}.pdf"
         file_path = f"static/reports/{file_name}"
         pdf.output(file_path)
         
-        # 4. إرجاع الرابط اللي رح تحمله "مي" من الفلاتر
         return f"/static/reports/{file_name}"

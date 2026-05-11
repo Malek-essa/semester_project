@@ -8,7 +8,6 @@ class UserRepo:
     def get_user_by_email(self, email: str):
         return self.db.query(models.User).filter(models.User.email == email).first()
 
-    # دالة مضافة: بتلزمنا لجلب المستخدم عن طريق الـ ID تبعه
     def get_user_by_id(self, user_id: int):
         return self.db.query(models.User).filter(models.User.user_id == user_id).first()
 

@@ -19,7 +19,6 @@ class IntelligenceService:
 
         tips = []
         
-        # 🧠 منطق الذكاء: تحليل الفجوات
         if user.water_goal > 0 and water_sum < (user.water_goal * 0.5):
             tips.append({
                 "tip_title": "تنبيه الجفاف 💧", 
@@ -34,7 +33,6 @@ class IntelligenceService:
                 "relevance_score": 0.90
             })
 
-        # إذا كانت الأمور ممتازة
         if not tips:
             tips.append({
                 "tip_title": "عمل رائع! 🌟", 
