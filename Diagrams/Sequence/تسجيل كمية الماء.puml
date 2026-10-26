@@ -20,34 +20,34 @@ skinparam sequence {
 
 autonumber
 
-' الترتيب المكاني: المستخدم يساراً والنظام يميناً
-actor "المستخدم" as user
-participant "واجهة التطبيق\n(Flutter)" as ui
-participant "الخادم\n(Python)" as backend
-database "قاعدة البيانات\n(MySQL)" as db
+' Spatial arrangement: User on the left, System on the right
+actor "User" as user
+participant "App Interface\n(Flutter)" as ui
+participant "Backend Server\n(Python)" as backend
+database "Database\n(MySQL)" as db
 
-user -> ui : يضغط زر "إضافة ماء"
+user -> ui : Clicks "Add Water" button
 activate ui
-ui --> user : يعرض خيارات الكمية والنوع
-user -> ui : يحدد (مثال: 250مل، قهوة) ويؤكد
+ui --> user : Displays quantity and type options
+user -> ui : Selects (e.g., 250ml, Coffee) and confirms
 
-ui -> backend : إرسال البيانات (POST request)\n[التاريخ بصيغة: 13/04/2026]
+ui -> backend : Sends data (POST request)\n[Date format: 13/04/2026]
 activate backend
 
-backend -> backend : التحقق من صحة المدخلات\nوحساب نسبة الترطيب الفعلي
+backend -> backend : Validates inputs\nand calculates actual hydration rate
 
-backend -> db : حفظ السجل الجديد للمستخدم
+backend -> db : Saves new log for user
 activate db
-db --> backend : تأكيد الحفظ
+db --> backend : Confirms save
 deactivate db
 
-backend -> backend : حساب نسبة الإنجاز اليومي الجديدة
+backend -> backend : Calculates new daily progress percentage
 
-backend --> ui : إرجاع استجابة (نجاح + نسبة الإنجاز المحدثة)
+backend --> ui : Returns response (Success + Updated progress percentage)
 deactivate backend
 
-ui -> ui : تحديث شريط التقدم بيانياً
-ui --> user : عرض إشعار بنجاح الإضافة
+ui -> ui : Graphically updates progress bar
+ui --> user : Displays success notification
 deactivate ui
 
 @enduml

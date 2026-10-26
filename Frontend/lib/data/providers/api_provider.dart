@@ -225,9 +225,6 @@ class ApiProvider {
     }
   }
 
-
-
-  
   Future<Map<String, dynamic>> addCustomBeverage(String name, double factor, String token) async {
     final url = Uri.parse('${AppConstants.baseUrl}/beverages/custom');
     try {
@@ -245,9 +242,7 @@ class ApiProvider {
     } catch (e) {
       throw Exception('$e');
     }
-  }
-
-
+  } 
 
   Future<Map<String, dynamic>> exportReport(int userId, String token) async {
     final url = Uri.parse('${AppConstants.baseUrl}/reports/export?user_id=$userId&format=pdf');

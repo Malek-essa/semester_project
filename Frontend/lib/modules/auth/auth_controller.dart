@@ -58,7 +58,6 @@ class AuthController extends GetxController {
       return;
     }
 
-    // 🔥 التعديل هنا: فحص الاسم ليكون باللغة الإنجليزية فقط (أحرف ومسافات)
     if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(name)) {
       Get.snackbar('تنبيه', 'يرجى كتابة الاسم باللغة الإنجليزية فقط لتجنب أخطاء التقارير', backgroundColor: Colors.redAccent, colorText: Colors.white);
       return;

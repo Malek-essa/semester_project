@@ -39,7 +39,6 @@ class HomeController extends GetxController {
     final savedStr = prefs.getString('custom_beverages') ?? '[]';
     List savedList = jsonDecode(savedStr);
     
-    // المشروب الأساسي دائماً موجود
     beverages.value = [{"id": 1, "name": "ماء"}];
     beverages.addAll(savedList);
   }
